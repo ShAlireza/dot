@@ -70,7 +70,7 @@ install_neovim_linux() {
 
   local dest="$HOME/.local" tmp
   tmp="$(mktemp -d)"
-  trap 'rm -rf "$tmp"' RETURN
+  trap 'rm -rf "${tmp:-}"' RETURN
   mkdir -p "$dest/bin"
   log "Downloading Neovim ($asset) from GitHub releases…"
   curl -fsSL "https://github.com/neovim/neovim/releases/latest/download/${asset}" -o "$tmp/$asset" \
@@ -179,7 +179,7 @@ install_mason_tools() {
   log "Installing language servers & formatter via Mason: ${MASON_TOOLS[*]}"
   local helper
   helper="$(mktemp -t mason-install.XXXXXX.lua)"
-  trap 'rm -f "$helper"' RETURN
+  trap 'rm -f "${helper:-}"' RETURN
 
   {
     printf 'local want = {'
